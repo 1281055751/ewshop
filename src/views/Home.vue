@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    {{ banner }}
+    {{ banner }}1
   </div>
 </template>
 
