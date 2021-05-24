@@ -1,26 +1,11 @@
 <template>
   <div class="recommend">
-    <div class="recommend-item">
+    <div class="recommend-item" v-for="item in recommends":key="item.id">
       <a href="">
-        <img src="~assets/images/logo.png" alt="">
+        <img :src="item.cover_url" alt="">
         <div>细说php </div>
       </a>
-    </div>
-    <div class="recommend-item">
-      <a href="">
-        <img src="~assets/images/logo.png" alt="">
-        <div>细说php </div>
-      </a>
-    </div><div class="recommend-item">
-    <a href="">
-      <img src="~assets/images/logo.png" alt="">
-      <div>细说php </div>
-    </a>
-  </div><div class="recommend-item">
-    <a href="">
-      <img src="~assets/images/logo.png" alt="">
-      <div>细说php </div>
-    </a>
+
   </div>
 
 
@@ -34,7 +19,7 @@ export default {
     recommends:{
       type:array,
       default(){
-
+        return[];
       }
     }
   }
