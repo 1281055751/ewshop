@@ -1,0 +1,65 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "21489283",
+      "name": "购物车-面性",
+      "font_class": "gouwuche-mianxing",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "21489284",
+      "name": "首页-面性",
+      "font_class": "shouye-mianxing",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "21489285",
+      "name": "首页-线性",
+      "font_class": "shouye-xianxing",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "21489286",
+      "name": "分类-线性",
+      "font_class": "fenlei-xianxing",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "21489287",
+      "name": "分类-面性",
+      "font_class": "fenlei-mianxing",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "21489288",
+      "name": "购物车-线性",
+      "font_class": "gouwuche-xianxing",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "21490677",
+      "name": "我的-线性-1",
+      "font_class": "wode-xianxing-1",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "21490681",
+      "name": "我的-面性-1",
+      "font_class": "wode-mianxing-1",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    }
+  ]
+}
