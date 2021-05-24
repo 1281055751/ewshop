@@ -17,7 +17,7 @@ export function request(config) {
     })
     //响应拦截
     instance.interceptors.response.use(res => {
-        console.log(res);
+        // console.log(res);
         return res.data ? res.data : res;
     }, err => {
         //如果有需要授权才可以访问的接口，统一去login授权

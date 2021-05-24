@@ -1,24 +1,25 @@
 <template>
+
+    <router-view/>
+
   <div id="nav">
-    <router-link to="/">
-      <i class="iconfont icon-shouye"></i>
+    <router-link class="tab-bar-item" to="/">
+      <i class="iconfont icon icon-shouye"></i>
       <div>首页</div>
     </router-link>
-    <router-link to="/category">
-      <i class="iconfont icon-fenlei"></i>
+    <router-link class="tab-bar-item" to="/category">
+      <i class="iconfont icon icon-fenlei"></i>
       <div>分类</div>
     </router-link>
-    <router-link to="/shopcart">
-      <i class="iconfont icon-gouwuche"></i>
+    <router-link class="tab-bar-item" to="/shopcart">
+      <i class="iconfont icon icon-gouwuche"></i>
       <div>购物车</div>
     </router-link>
-    <router-link to="/profile">
-      <i class="iconfont icon-wode"></i>
+    <router-link class="tab-bar-item" to="/profile">
+      <i class="iconfont icon icon-wode"></i>
       <div>我的</div>
     </router-link>
-    <router-view/>
   </div>
-
 </template>
 
 <style lang="scss">
@@ -34,15 +35,35 @@
 }
 
 #nav {
-  padding: 30px;
-
+  //padding: 30px;
+  background-color: #F6F6F6;
+  display: flex;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  box-shadow: 0 -4px 1px rgba(100,100,100,0.1);
   a {
-    font-weight: bold;
-    color: #2c3e50;
+    //font-weight: bold;
+    color:var(--color-text);
+
 
     &.router-link-exact-active {
       color: var(--color-high-text);
     }
   }
+}
+.tab-bar-item{
+  flex: 1;
+  text-align: center;
+  height: 50px;
+  font-size: var(--font-size);
+}
+.tab-bar-item .icon{
+  width: 24px;
+  height: 24px;
+  margin-top: 5px;
+  vertical-align: middle;
+  display: inline-block;
 }
 </style>
