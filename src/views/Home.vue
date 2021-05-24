@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     {{ banner }}1
+    <id class="demo"></id>
   </div>
 </template>
 
