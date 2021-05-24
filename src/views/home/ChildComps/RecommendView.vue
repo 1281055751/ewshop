@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: "RecommendView"
+  name: "RecommendView",
   props:{
     recommends:{
       type:array,
