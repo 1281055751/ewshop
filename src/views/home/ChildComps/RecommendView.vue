@@ -1,9 +1,9 @@
 <template>
   <div class="recommend">
-    <div class="recommend-item" v-for="item in recommends":key="item.id">
+    <div class="recommend-item" v-for="item in recommends.slice(0,4)" :key="item.id">
       <a href="">
         <img :src="item.cover_url" alt="">
-        <div>细说php </div>
+        <div>{{item.title}}</div>
       </a>
 
   </div>
@@ -17,7 +17,7 @@ export default {
   name: "RecommendView",
   props:{
     recommends:{
-      type:array,
+      type:Array,
       default(){
         return[];
       }
