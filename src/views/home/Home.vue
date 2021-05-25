@@ -63,6 +63,10 @@ export default {
     let temid = ref(0)
     const recommends = ref([])
 
+    //列表数据模型
+    const goods =reactive({
+      sales:{page:0,lis}
+    })
     onMounted(() => {
 
       getHomeAllData().then(res => {
@@ -71,9 +75,16 @@ export default {
         recommends.value = res.goods.data;
       })
 
-      getHomeGoods().then(res=>{
+      getHomeGoods('sales').then(res=>{
         console.log(res);
       })
+      getHomeGoods('recommend').then(res=>{
+        console.log(res);
+      })
+      getHomeGoods('new').then(res=>{
+        console.log(res);
+      })
+
     })
 
     const tabClick = (index)=>{
@@ -82,7 +93,8 @@ export default {
     return {
       recommends,
       temid,
-      tabClick
+      tabClick,
+      goods,
     }
   },
   components: {
