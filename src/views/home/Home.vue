@@ -64,9 +64,9 @@ export default {
     const recommends = ref([])
 
     //列表数据模型
-    const goods =reactive({
-      sales:{page:0,lis}
-    })
+    // const goods =reactive({
+    //   sales:{page:0,lis}
+    // })
     onMounted(() => {
 
       getHomeAllData().then(res => {
@@ -94,7 +94,7 @@ export default {
       recommends,
       temid,
       tabClick,
-      goods,
+      // goods,
     }
   },
   components: {
