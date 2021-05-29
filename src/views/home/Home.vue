@@ -22,7 +22,7 @@
         <goods-list :goods="showGoods"></goods-list>
       </div>
     </div>
-      <back-top></back-top>
+      <back-top @bTop="bTop" v-show="inShowBackTop"></back-top>
   </div>
 </template>
 
@@ -41,6 +41,7 @@ export default {
   setup() {
     //临时变量
     let inTabFixed =ref(false);
+    let inShowBackTop=ref(false);
     let banref =ref(null);
     const recommends = ref([])
 
@@ -92,7 +93,7 @@ export default {
       bscroll.on('scroll', (position) => {
         // console.log(position.y);
         console.log(banref.value.offsetHeight);
-        inTabFixed.value =(-position.y)>banref.value.offsetHeight
+        inShowBackTop.value=inTabFixed.value =(-position.y)>banref.value.offsetHeight
       })
 
       //上拉加载数据,触发pullingUp
@@ -134,13 +135,17 @@ export default {
         bscroll && bscroll.refresh()
       })
     })
+    const bTop = ()=>{
+
+    }
     return {
       recommends,
       inTabFixed,
       tabClick,
       goods,
       showGoods,
-      banref
+      banref,
+      inShowBackTop
     }
   },
   components: {
