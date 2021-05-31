@@ -1,6 +1,6 @@
 <template>
 
-    <router-view/>
+  <router-view/>
 
   <div id="nav">
     <router-link class="tab-bar-item" to="/">
@@ -42,10 +42,11 @@
   left: 0;
   bottom: 0;
   right: 0;
-  box-shadow: 0 -4px 1px rgba(100,100,100,0.1);
+  box-shadow: 0 -4px 1px rgba(100, 100, 100, 0.1);
+
   a {
     //font-weight: bold;
-    color:var(--color-text);
+    color: var(--color-text);
 
 
     &.router-link-exact-active {
@@ -53,13 +54,15 @@
     }
   }
 }
-.tab-bar-item{
+
+.tab-bar-item {
   flex: 1;
   text-align: center;
   height: 50px;
   font-size: var(--font-size);
 }
-.tab-bar-item .icon{
+
+.tab-bar-item .icon {
   width: 24px;
   height: 24px;
   margin-top: 5px;

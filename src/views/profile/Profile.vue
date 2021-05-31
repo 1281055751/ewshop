@@ -8,9 +8,10 @@
 
 <script>
 import NavBar from "components/common/navbar/NavBar";
+
 export default {
   name: "Profile",
-  components:{
+  components: {
     NavBar
   }
 }
