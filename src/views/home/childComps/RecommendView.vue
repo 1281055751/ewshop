@@ -25,8 +25,7 @@ export default {
       }
     }
   },
-
-  setup() {
+   setup() {
     const router = useRouter();
     const goD = (id) => {
       router.push({path: '/detail', query: {id}})

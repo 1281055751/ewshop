@@ -28,7 +28,7 @@
 
 <script>
 import NavBar from "components/common/navbar/NavBar";
-import RecommendView from "@/views/home/ChildComps/RecommendView";
+import RecommendView from "views/home/childComps/RecommendView";
 import TabControl from "components/content/tabCoutrol/TabContorl";
 import {getHomeAllData, getHomeGoods} from "@/network/home";
 import {ref, reactive, onMounted, computed, watchEffect, nextTick} from "vue";
