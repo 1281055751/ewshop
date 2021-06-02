@@ -8,10 +8,9 @@
     <div class="wrapper">
       <div class="content">
         <div ref="banref">
-         <home-swiper  :banners="banners"></home-swiper>
+          <home-swiper :banners="banners"></home-swiper>
           <recommend-view :recommends="recommends"></recommend-view>
         </div>
-
 
 
         <tab-control @tabClick="tabClick" :titles="['畅销','新书','精选']"></tab-control>
@@ -20,7 +19,7 @@
         <goods-list :goods="showGoods"></goods-list>
       </div>
     </div>
-      <back-top @bTop="bTop" v-show="inShowBackTop"></back-top>
+    <back-top @bTop="bTop" v-show="inShowBackTop"></back-top>
   </div>
 </template>
 
@@ -39,9 +38,9 @@ export default {
   name: "home",
   setup() {
     //临时变量
-    let inTabFixed =ref(false);
-    let inShowBackTop=ref(false);
-    let banref =ref(null);
+    let inTabFixed = ref(false);
+    let inShowBackTop = ref(false);
+    let banref = ref(null);
     const recommends = ref([])
 
     //列表数据模型
@@ -59,7 +58,7 @@ export default {
     })
     let bscroll = reactive({});
 
-    let banners =ref([])
+    let banners = ref([])
     onMounted(() => {
 
       getHomeAllData().then(res => {
@@ -96,24 +95,24 @@ export default {
       bscroll.on('scroll', (position) => {
         // console.log(position.y);
         console.log(banref.value.offsetHeight);
-        inShowBackTop.value=inTabFixed.value =(-position.y)>banref.value.offsetHeight
+        inShowBackTop.value = inTabFixed.value = (-position.y) > banref.value.offsetHeight
       })
 
       //上拉加载数据,触发pullingUp
-      bscroll.on('pullingUp',()=>{
+      bscroll.on('pullingUp', () => {
         console.log('上拉加载更多')
 
-        const page =goods[currentType.value].page+1;
-        getHomeGoods(currentType.value,page).then(res=>{
+        const page = goods[currentType.value].page + 1;
+        getHomeGoods(currentType.value, page).then(res => {
           goods[currentType.value].list.push(...res.goods.data)
-          goods[currentType.value].page +=1;
+          goods[currentType.value].page += 1;
         })
         //完成上拉，等数据请求完成，要将新数据展示出来
         bscroll.finishPullUp();
-        console.log('当前类型'+currentType.value+'当前页'+page);
+        console.log('当前类型' + currentType.value + '当前页' + page);
         //重新计算高度
         bscroll.refresh();
-        console.log("contentheight:"+document.querySelector('.content').clientHeight );
+        console.log("contentheight:" + document.querySelector('.content').clientHeight);
 
       })
 
@@ -138,8 +137,8 @@ export default {
         bscroll && bscroll.refresh()
       })
     })
-    const bTop = ()=>{
-      bscroll.scrollTo(0,0,500);
+    const bTop = () => {
+      bscroll.scrollTo(0, 0, 500);
     }
     return {
       recommends,

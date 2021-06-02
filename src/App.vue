@@ -3,7 +3,7 @@
   <router-view v-slot="{ Component }">
     <transition>
       <keep-alive>
-        <component :is="Component" />
+        <component :is="Component"/>
       </keep-alive>
     </transition>
   </router-view>
@@ -18,9 +18,10 @@
     </router-link>
     <router-link class="tab-bar-item" to="/shopcart">
       <div class="icon">
-      <van-badge :content="20" max="9">
-        <div class="child" /> <i class="iconfont icon-gouwuche"></i>
-      </van-badge>
+        <van-badge :content="20" max="9">
+          <div class="child"/>
+          <i class="iconfont icon-gouwuche"></i>
+        </van-badge>
       </div>
       <div>购物车</div>
     </router-link>

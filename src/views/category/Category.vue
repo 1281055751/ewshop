@@ -5,25 +5,29 @@
     </nav-bar>
     <div id="mianbox">
       <div class="ordertab">
-        <van-tabs v-model="active">
-          <van-tab title="销量排序"> </van-tab>
-          <van-tab title="价格排序"> </van-tab>
-          <van-tab title="评论排序"> </van-tab>
+        <van-tabs v-model="active" @click="tabClick">
+          <van-tab title="销量排序"></van-tab>
+          <van-tab title="价格排序"></van-tab>
+          <van-tab title="评论排序"></van-tab>
         </van-tabs>
       </div>
 
-        <van-sidebar class="leftmenu" v-model="activeKey" >
+      <van-sidebar class="leftmenu" v-model="activeKey">
         <van-collapse v-model="activeName" accordion>
-          <van-collapse-item v-for="(item,index) in categories"  :key="index"
+          <van-collapse-item v-for="(item,index) in categories" :key="index"
                              :title="item.name" :name="item.name">
 
 
-              <van-sidebar-item v-for="sub in item.children" :title="sub.name" />
+            <van-sidebar-item v-for="sub in item.children"
+                              :title="sub.name"
+                              :key="sub.id"
+                              @click="getGoods(sub.id)"
+            />
 
           </van-collapse-item>
 
         </van-collapse>
-        </van-sidebar>
+      </van-sidebar>
 
       <div class="goodslist">
         <div class="content">
@@ -66,27 +70,47 @@
 
 <script>
 import NavBar from "components/common/navbar/NavBar";
-import {ref,reactive,onMounted} from 'vue';
+import {ref, reactive, onMounted} from 'vue';
 import {getCategory} from "network/category";
 
 export default {
   name: "Category",
-  setup(){
-    let active =ref(1);
-    let activeKey =ref(0);
+  setup() {
+    let active = ref(1);
+    let activeKey = ref(0);
     let activeName = ref(1);
-    let categories =ref([]);
-    onMounted(()=>{
-      getCategory().then((res)=>{
+    let categories = ref([]);
+    //当前排序的条件
+    let currentOrder =ref('seles')
+    //当前分类的id
+    let currentCid =ref(0)
+    onMounted(() => {
+      getCategory().then((res) => {
         categories.value = res.categories
         console.log(res);
       })
     })
-    return{
+    //排序选项卡
+    const tabClick = (index) => {
+
+      let orders = ['seles', 'price', 'comments_count']
+      currentOrder.value =orders[index]
+      console.log('排序的序号:' + orders[index])
+    }
+    //通过分类得到商品
+    const getGoods = (cid) =>{
+      currentCid.value = cid
+      console.log(cid);
+      console.log('当前分类的id：'+currentOrder.value)
+    }
+    return {
       activeKey,
       categories,
       activeName,
-      active
+      active,
+      tabClick,
+      getGoods
+
     }
   },
   components: {
@@ -96,9 +120,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#mianbox{
+#mianbox {
   margin-top: 45px;
   display: flex;
+
   .ordertab {
     flex: 1;
     float: right;
@@ -112,7 +137,8 @@ export default {
     left: 130px;
     height: 44px;
   }
-  .leftmenu{
+
+  .leftmenu {
     position: fixed;
     top: 95px;
     left: 0;
@@ -120,7 +146,8 @@ export default {
     width: 130px;
     //height: 200px;
   }
-  .goodslist{
+
+  .goodslist {
     flex: 1;
     //background: blue;
     padding: 10px;
