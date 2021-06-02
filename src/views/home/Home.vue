@@ -8,9 +8,7 @@
     <div class="wrapper">
       <div class="content">
         <div ref="banref">
-          <div class="banners">
-            <img src="~assets/images/图层179.png" alt="">
-          </div>
+         <home-swiper  :banners="banners"></home-swiper>
           <recommend-view :recommends="recommends"></recommend-view>
         </div>
 
@@ -35,6 +33,7 @@ import {ref, reactive, onMounted, computed, watchEffect, nextTick} from "vue";
 import GoodsList from "components/content/goods/GoodsList";
 import BScroll from 'better-scroll'
 import BackTop from "components/common/backtop/BackTop";
+import HomeSwiper from "@/views/home/ChildComps/HomeSwiper";
 
 export default {
   name: "home",
@@ -59,12 +58,16 @@ export default {
 
     })
     let bscroll = reactive({});
+
+    let banners =ref([])
     onMounted(() => {
 
       getHomeAllData().then(res => {
         // console.log(res)
 
         recommends.value = res.goods.data;
+        banners.value = res.slides;
+        console.log(res.slides);
       })
 
       getHomeGoods('sales').then(res => {
@@ -136,7 +139,7 @@ export default {
       })
     })
     const bTop = ()=>{
-
+      bscroll.scrollTo(0,0,500);
     }
     return {
       recommends,
@@ -145,7 +148,9 @@ export default {
       goods,
       showGoods,
       banref,
-      inShowBackTop
+      inShowBackTop,
+      bTop,
+      banners
     }
   },
   components: {
@@ -153,7 +158,8 @@ export default {
     RecommendView,
     TabControl,
     GoodsList,
-    BackTop
+    BackTop,
+    HomeSwiper
 
   },
 
