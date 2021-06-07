@@ -10,10 +10,10 @@
 <script>
 export default {
   name: "HomeSwiper",
-  props:{
-    banners:Array,
-    default(){
-      return[]
+  props: {
+    banners: Array,
+    default() {
+      return []
     }
   }
 }

@@ -32,76 +32,145 @@
       <div class="goodslist">
         <div class="content">
           <van-card
-              num="2"
-              tag="标签"
-              price="2.00"
-              desc="描述信息"
-              title="商品标题"
-              thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-              origin-price="10.00"
+              v-for="item in showGoods" :key="item.id"
+              @click="itemClick(item.id)"
+              :num="item.comments_count"
+              :tag="item.comments_count >= 0 ? '流行' : '标签'"
+              :price="item.price"
+              :desc="item.updated_at"
+              :title="item.title"
+              :thumb="item.cover_url"
+              :lazy-load="true"
           />
-          <van-card
-              num="2"
-              price="2.00"
-              desc="描述信息"
-              title="商品标题"
-              thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-          />
-          <van-card
-              num="2"
-              price="2.00"
-              desc="描述信息"
-              title="商品标题"
-              thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-          />
-          <van-card
-              num="2"
-              price="2.00"
-              desc="描述信息"
-              title="商品标题"
-              thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-          />
+
 
         </div>
       </div>
     </div>
+    <back-top @bTop="bTop" v-show="inShowBackTop"></back-top>
   </div>
 </template>
 
 <script>
 import NavBar from "components/common/navbar/NavBar";
-import {ref, reactive, onMounted} from 'vue';
-import {getCategory} from "network/category";
+import {ref, reactive, onMounted, computed, watchEffect, nextTick} from 'vue';
+import {getCategory,getCategoryGoods} from "network/category";
+import BScroll from 'better-scroll'
+import {useRouter} from 'vue-router'
+// import {getHomeGoods} from "@/network/home";
+import BackTop from "components/common/backtop/BackTop";
 
 export default {
   name: "Category",
   setup() {
+    const router =useRouter()
     let active = ref(1);
     let activeKey = ref(0);
     let activeName = ref(1);
     let categories = ref([]);
+    let inShowBackTop =ref (false);
     //当前排序的条件
-    let currentOrder =ref('seles')
+    let currentOrder =ref('sales')
     //当前分类的id
     let currentCid =ref(0)
+
+    let bscroll = reactive({});
+    //数据模型
+    const goods =reactive({
+      sales:{page:1,list:[]},
+      price:{page:1,list:[]},
+      comments_count:{page:1,list:[]}
+    })
+    const showGoods =computed(()=>{
+      return goods[currentOrder.value].list;
+        }
+     )
+    const la = document.querySelector('df')
+    const init =()=>{
+      getCategoryGoods('sales',currentCid.value).then(res=>{
+        goods.sales.list = res.goods.data;
+      })
+      getCategoryGoods('price',currentCid.value).then(res=>{
+        goods.price.list = res.goods.data;
+      })
+      getCategoryGoods('comments_count',currentCid.value).then(res=>{
+        goods.comments_count.list = res.goods.data;
+      })
+
+    }
     onMounted(() => {
       getCategory().then((res) => {
         categories.value = res.categories
         console.log(res);
       })
+      init();
+
+      //创建BetterScroll对象
+      bscroll = new BScroll(document.querySelector('.goodslist'), {
+        probeType: 3,//0,1,2,3 3 只要在运动就触发scroll事件
+        click: true, //是否允许点击
+        pullUpLoad: true //上拉加载更多，默认是false
+      });
+
+
+      //注册滚动事件
+      bscroll.on("scroll",(position)=>{
+        inShowBackTop.value=(-position.y>300)
+      })
+      //上拉加载数据,触发pullingUp
+      bscroll.on('pullingUp', () => {
+        console.log('上拉加载更多')
+        const page =goods[currentOrder.value].page +1;
+
+        getCategoryGoods(currentOrder.value,currentCid.value).then(res=>{
+          goods[currentOrder.value].list.push(...res.goods.data);
+          goods[currentOrder.value].page+=1;
+
+        })
+        //完成上拉，等数据请求完成，要将新数据展示出来
+        bscroll.finishPullUp();
+        //重新计算高度
+        bscroll.refresh();
+        console.log("contentheight:" + document.querySelector('.content').clientHeight);
+        console.log("当前类型："+currentOrder.value+",当前页"+page);
+        // return currentOrder.value+page;
+      })
     })
     //排序选项卡
     const tabClick = (index) => {
 
-      let orders = ['seles', 'price', 'comments_count']
+      let orders = ['sales', 'price', 'comments_count']
       currentOrder.value =orders[index]
+      getCategoryGoods(currentOrder.value,currentCid.value).then(res=>{
+        goods[currentOrder.value].list = res.goods.data;
+
+          nextTick(() => {
+          //重新计算高度
+          bscroll && bscroll.refresh()
+        })
+      })
       console.log('排序的序号:' + orders[index])
     }
     //通过分类得到商品
     const getGoods = (cid) =>{
       currentCid.value = cid
-      console.log(cid);
-      console.log('当前分类的id：'+currentOrder.value)
+      init();
+      console.log('当前分类的id：'+currentCid.value);
+      console.log('排序的序号：'+currentOrder.value)
+    }
+
+    //监听任何一个变量有变化
+    watchEffect(() => {
+      nextTick(() => {
+        //重新计算高度
+        bscroll && bscroll.refresh()
+      })
+    })
+
+    const bTop = ()=>{
+
+        bscroll.scrollTo(0, 0, 300);
+
     }
     return {
       activeKey,
@@ -109,12 +178,27 @@ export default {
       activeName,
       active,
       tabClick,
-      getGoods
+      getGoods,
+      goods,
+      showGoods,
+      init,
+      bscroll,
+      inShowBackTop,
+      bTop,
+      itemClick:(id)=>{
+        router.push({path:'/detail',query:{id}});
+      }
+      // currentOrder,
+      // page
+
+
 
     }
   },
+
   components: {
-    NavBar
+    NavBar,
+    BackTop
   }
 }
 </script>
@@ -130,6 +214,7 @@ export default {
     //background: red;
     //width: 100%;
     height: 50px;
+
     z-index: 9;
     position: fixed;
     top: 45px;
@@ -156,8 +241,17 @@ export default {
     left: 130px;
     right: 0;
     height: 100vh;
+    text-align: left;
+
+    .content{
+      //background: red;
+      padding-top: 100px;
+    }
+
 
   }
-
+  .van-card__thumb{
+    width: 68px;
+  }
 }
 </style>
