@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item" @click="itemClick">
+  <div class="goods-item" @click="itemClick(product)">
     <img v-lazy="product.cover_url" alt="">
     <div class="goods-info">
       <p>{{ product.title }}</p>
@@ -23,7 +23,7 @@ export default {
     const router = useRouter()
     return {
       itemClick:(props)=>{
-        router.push({path:'/detail',query:{id:props.product.id}})
+        router.push({path:'/detail',query:{id:props.id}})
       }
     }
   }

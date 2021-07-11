@@ -9,7 +9,8 @@
       <slot>EWshop</slot>
     </div>
     <div class="right">
-      <slot name="right"></slot>
+      <slot name="right">
+      </slot>
     </div>
 
   </div>
@@ -33,6 +34,7 @@ export default {
 
 <style scoped>
 .nav-bar {
+  display: flex;
   background-color: var(--color-tint);
   color: #FFFFFF;
   position: fixed;
@@ -46,19 +48,16 @@ export default {
   box-shadow: 0 2px 0 rgba(100, 100, 100, 0.1);
 }
 
-.left, .right {
+.left,.right {
   width: 60px;
-  /*display: inline-block;*/
 }
 
-.left img {
+.left  img {
   width: 45px;
   padding: 12px;
 }
 
 .center {
-  /*background-color: red;*/
   flex: 1;
-  /*display: inline-block;*/
 }
 </style>
